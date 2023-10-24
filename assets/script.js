@@ -2,33 +2,67 @@
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
 
-var currentDate = document.querySelector("#currentDay");
-// var currentDate = $("#currentDay");
-var currentTime = dayjs().format('H');
-var timeBlock = document.querySelector(".time-block")
+
+var currentDate = $("#currentDay");
+var currentTime = parseInt(dayjs().format('H'));
+var timeBlock = $(".time-block");
+// var calendarItems = [];
+var textAreaEl = $("textarea");
+var calendarItems = localStorage.getItem('calendarAdds');
 
 
-currentDate.textContent = dayjs().format('dddd, MMMM D, YYYY')
-
+currentDate.text(dayjs().format('dddd, MMMM D, YYYY [at] hh:mm:ss a'));
+// setInterval(currentDate, 1000);
 
 
 
 $(function () {
-  function hourlyColor() {
-    $(timeBlock).each(function() {
-      if (blockHour === currentTime)
-      timeBlock.attr('class', 'present');
-      if (blockHour > currentTime) 
-      timeBlock.attr('class', 'future');
-      if (blockHour < currentTime) 
-        timeBlock.attr('class', 'past');
-      });
+  function renderCalendarItems() {
+    
+    if (calendarItems) {
+      calendarItems = JSON.parse(calendarItems);
+    } else {
+      calendarItems = [];
+    }
+    return calendarItems;
+  }
+
+  function saveCalendarItems() {
+    $('.saveBtn').on("click", function() {
+      // console.log(event.target);
+      localStorage.setItem('calendarAdds', JSON.stringify(calendarItems));
+    })
+  }
+
+  function printCalendarItems() {
+    textAreaEl.empty();
+    var calendarItems = renderCalendarItems();
+  }
+
+
+  function hourColor() {
+    $(".time-block").each(function () {
+      var blockHourNumber = parseInt(this.id);
+      console.log("hi");
+      if (parseInt(blockHourNumber === currentTime)){
+        $(".time-block").attr('class', 'present');
+      }else if (parseInt(blockHourNumber > currentTime)) {
+        $(".time-block").attr('class', 'future');
+      }else{ (parseInt(blockHourNumber < currentTime)) 
+        $(".time-block").attr('class', 'past');
+      }});
     }
 
-  hourlyColor()
+  hourColor();
+  saveCalendarItems();
+  printCalendarItems();
 
-})
 
+
+  })
+
+
+// event.preventDefault();
 
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
