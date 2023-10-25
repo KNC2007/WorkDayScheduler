@@ -5,20 +5,22 @@
 
 var currentDate = $("#currentDay");
 var currentTime = parseInt(dayjs().format('H'));
-var timeBlock = $(".time-block");
-// var calendarItems = [];
+// var timeBlock = $(".time-block");
 var textAreaEl = $("textarea");
 var calendarItems = localStorage.getItem('calendarAdds');
 
 
-currentDate.text(dayjs().format('dddd, MMMM D, YYYY [at] hh:mm:ss a'));
-// setInterval(currentDate, 1000);
 
 
 
 $(function () {
+  function displayCalendar() {
+  var presentTime = dayjs().format('dddd, MMMM D, YYYY [at] hh:mm:ss a');
+  currentDate.text(presentTime);
+}
+
+
   function renderCalendarItems() {
-    
     if (calendarItems) {
       calendarItems = JSON.parse(calendarItems);
     } else {
@@ -27,35 +29,45 @@ $(function () {
     return calendarItems;
   }
 
+
   function saveCalendarItems() {
-    $('.saveBtn').on("click", function() {
-      // console.log(event.target);
+    $('.saveBtn').on("click", function(event) {
+      console.log(event.target);
       localStorage.setItem('calendarAdds', JSON.stringify(calendarItems));
     })
   }
 
-  function printCalendarItems() {
-    textAreaEl.empty();
-    var calendarItems = renderCalendarItems();
-  }
+  // function printCalendarItems() {
+  //   textAreaEl.empty();
+  //   var calendarItems = renderCalendarItems();
+  //   for (let i = 0; i < calendarItems.length; i++) {
+  //     var calendarItem = calendarItems[i];
+  //     // var deleteEl = 
+      
+  //   }
+  // }
+
 
 
   function hourColor() {
-    $(".time-block").each(function () {
+    $(".description").each(function () {
       var blockHourNumber = parseInt(this.id);
       console.log("hi");
       if (parseInt(blockHourNumber === currentTime)){
-        $(".time-block").attr('class', 'present');
+        $(".description").addClass('present');
       }else if (parseInt(blockHourNumber > currentTime)) {
-        $(".time-block").attr('class', 'future');
+        $(".description").addClass('future');
       }else{ (parseInt(blockHourNumber < currentTime)) 
-        $(".time-block").attr('class', 'past');
+        $(".description").addClass('past');
       }});
     }
 
+  displayCalendar();
+  setInterval(displayCalendar, 1000);
   hourColor();
   saveCalendarItems();
-  printCalendarItems();
+  // printCalendarItems();
+  renderCalendarItems();
 
 
 
