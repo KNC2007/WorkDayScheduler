@@ -7,7 +7,9 @@ var currentDate = $("#currentDay");
 var currentTime = parseInt(dayjs().format('H'));
 // var timeBlock = $(".time-block");
 var textAreaEl = $("textarea");
-var calendarItems = localStorage.getItem('calendarAdds');
+calendarItems = [];
+// var timeTextEl = $("id");
+
 
 
 
@@ -20,45 +22,35 @@ $(function () {
 }
 
 
-  function renderCalendarItems() {
-    if (calendarItems) {
-      calendarItems = JSON.parse(calendarItems);
-    } else {
-      calendarItems = [];
-    }
-    return calendarItems;
-  }
 
+$("#17 .description").val(localStorage.getItem(17))
 
-  function saveCalendarItems() {
-    $('.saveBtn').on("click", function(event) {
-      console.log(event.target);
-      localStorage.setItem('calendarAdds', JSON.stringify(calendarItems));
-    })
-  }
-
-  // function printCalendarItems() {
-  //   textAreaEl.empty();
-  //   var calendarItems = renderCalendarItems();
-  //   for (let i = 0; i < calendarItems.length; i++) {
-  //     var calendarItem = calendarItems[i];
-  //     // var deleteEl = 
+  
+ $('.saveBtn').on("click", function(event) {
+  console.log($(this));
+      var timeBlockToDo = $(this).parent().attr("id");
+      console.log(timeBlockToDo);
+      var calendarToDo = $(this).siblings("textarea").val();
+      console.log(calendarToDo);
       
-  //   }
-  // }
+      localStorage.setItem(timeBlockToDo, calendarToDo);
+    })
 
 
+
+  console.log(currentTime);
 
   function hourColor() {
     $(".description").each(function () {
-      var blockHourNumber = parseInt(this.id);
-      console.log("hi");
-      if (parseInt(blockHourNumber === currentTime)){
-        $(".description").addClass('present');
-      }else if (parseInt(blockHourNumber > currentTime)) {
-        $(".description").addClass('future');
-      }else{ (parseInt(blockHourNumber < currentTime)) 
-        $(".description").addClass('past');
+      console.log(this);
+      console.log(parseInt($(this).parent().attr("id")));
+      var blockHourNumber = parseInt($(this).parent().attr("id"));
+      if (blockHourNumber == currentTime){
+        $(this).addClass('present');
+      }else if (blockHourNumber > currentTime) {
+        $(this).addClass('future');
+      }else{ (blockHourNumber < currentTime) 
+        $(this).addClass('past');
       }});
     }
 
@@ -66,11 +58,7 @@ $(function () {
   setInterval(displayCalendar, 1000);
   hourColor();
   saveCalendarItems();
-  // printCalendarItems();
   renderCalendarItems();
-
-
-
   })
 
 
