@@ -9,7 +9,7 @@ The following image demonstrates the web application's appearence and functional
 ![The screen displays a calendar for the current date and shows the current time. There are time blocks showing times between 9am and 5pm. The user can type in each box and press the save button next to the box.](./assets/screenshot%20work%20day%20scheduler.png)
 
 ## Deployed Application
-Click here to visit the deployed Password Generator website: https://knc2007.github.io/WorkDayScheduler/
+Click here to visit the deployed website: https://knc2007.github.io/WorkDayScheduler/
 
 ## Resources
 - The following websites were used as reference for Javascript and jQuery: https://www.w3schools.com/ and https://developer.mozilla.org/en-US/ and https://htmlcheatsheet.com/jquery/ 
